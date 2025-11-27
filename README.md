@@ -46,6 +46,71 @@
 - **Zooming**: Use the `+` and `-` buttons in the bottom right corner of the preview pane.
 - **About**: Click the `info` icon in the top right corner to view application information.
 
+## Deployment
+
+This is a static web application that can be deployed for **free** on various platforms. Here are the recommended options:
+
+### Option 1: Vercel (Recommended - Easiest)
+
+1. Visit [vercel.com](https://vercel.com) and sign in with GitHub
+2. Click "New Project" and import your repository
+3. Vercel will auto-detect the Vite configuration
+4. Click "Deploy"
+
+That's it! Your app will be live with a URL like `https://your-app.vercel.app`
+
+### Option 2: GitHub Pages
+
+1. Install gh-pages:
+   ```bash
+   npm install --save-dev gh-pages
+   ```
+
+2. Add deploy script to `package.json`:
+   ```json
+   {
+     "scripts": {
+       "deploy": "vite build && gh-pages -d dist"
+     }
+   }
+   ```
+
+3. Update `vite.config.ts` to set the base path:
+   ```typescript
+   export default defineConfig({
+     base: '/your-repo-name/',
+     // ... rest of config
+   })
+   ```
+
+4. Deploy:
+   ```bash
+   npm run deploy
+   ```
+
+5. Enable GitHub Pages in your repository settings (Settings → Pages → Source: gh-pages branch)
+
+### Option 3: Netlify
+
+1. Sign in to [netlify.com](https://netlify.com) with GitHub
+2. Click "Add new site" → "Import an existing project"
+3. Select your repository
+4. Build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+5. Click "Deploy"
+
+### Option 4: Cloudflare Pages
+
+1. Sign in to [Cloudflare Pages](https://pages.cloudflare.com)
+2. Create a new project and connect to your Git repository
+3. Build settings:
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+4. Click "Save and Deploy"
+
+All options are **100% free** for static sites with no backend requirements.
+
 ## Technologies Used
 
 - [Vue 3](https://vuejs.org/) - The Progressive JavaScript Framework
