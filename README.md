@@ -52,14 +52,45 @@ This is a static web application that can be deployed for **free** on various pl
 
 ### Option 1: Vercel (Recommended - Easiest)
 
+**Zero configuration required!**
+
 1. Visit [vercel.com](https://vercel.com) and sign in with GitHub
 2. Click "New Project" and import your repository
 3. Vercel will auto-detect the Vite configuration
 4. Click "Deploy"
 
-That's it! Your app will be live with a URL like `https://your-app.vercel.app`
+That's it! Your app will be live with a URL like `https://your-app.vercel.app`.
+*Note: The project is configured to work automatically on Vercel (serving from root `/`) while still supporting GitHub Pages (serving from subpath).*
 
-### Option 2: GitHub Pages
+### Option 2: GitHub Pages with GitHub Actions (Recommended for Automation)
+
+**Automatic deployment on every push to main branch!**
+
+1. Enable GitHub Pages in your repository:
+   - Go to Settings → Pages
+   - Under "Source", select "GitHub Actions"
+
+2. Update `vite.config.ts` with your repository name:
+   ```typescript
+   export default defineConfig({
+     plugins: [vue()],
+     base: process.env.NODE_ENV === 'production' ? '/your-repo-name/' : '/',
+   })
+   ```
+
+3. Push to main branch:
+   ```bash
+   git add .
+   git commit -m "Setup GitHub Actions deployment"
+   git push origin main
+   ```
+
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) will automatically:
+- Build your application
+- Deploy to GitHub Pages
+- Your site will be live at `https://yourusername.github.io/your-repo-name/`
+
+### Option 3: GitHub Pages (Manual Deployment)
 
 1. Install gh-pages:
    ```bash
@@ -90,7 +121,7 @@ That's it! Your app will be live with a URL like `https://your-app.vercel.app`
 
 5. Enable GitHub Pages in your repository settings (Settings → Pages → Source: gh-pages branch)
 
-### Option 3: Netlify
+### Option 4: Netlify
 
 1. Sign in to [netlify.com](https://netlify.com) with GitHub
 2. Click "Add new site" → "Import an existing project"
@@ -100,7 +131,7 @@ That's it! Your app will be live with a URL like `https://your-app.vercel.app`
    - Publish directory: `dist`
 5. Click "Deploy"
 
-### Option 4: Cloudflare Pages
+### Option 5: Cloudflare Pages
 
 1. Sign in to [Cloudflare Pages](https://pages.cloudflare.com)
 2. Create a new project and connect to your Git repository
